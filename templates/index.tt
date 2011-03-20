@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>パーソンファインダー名簿画像未入力写真検索 - Top</title>
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen,tv">
+    </head>
+    <body>
+        <div id="contents">
+        [% INSERT head.shtml %]
+        <h2>アルバム一覧</h2>
+        <p>情報取得元のRSSは<a href="[% rss %]">こちら</a></p>
+        <table class="main">
+        <tr>
+            <th></th>
+            <th>アルバム名(一覧へのリンク)</th>
+            <th>確認日時</th>
+            <th>コメント</th>
+            <th>アルバムにある写真の数</th>
+            <th>日付</th>
+        </tr>
+        [%FOREACH a = items%]
+        <tr>
+            <td><a href="[% a.title %].shtml"><img src="[% a.ththumbnail %]" style="height:40px"></a></td>
+            [% IF a.list_made %]
+            <td><a href="[% a.title %].shtml">[% a.title %]</a></td>
+            [% ELSE %]
+            <td>[% a.title %](作成中)</td>
+            [% END %]
+            <td class="datetime">[% a.check_dt %]</td>
+            <td>[% a.description %]</td>
+            <td class="num">[% a.numphotos %]</td>
+            <td class="datetime">[% a.last_modified %]</td>
+        </tr>
+        [%END%]
+        </table>
+        <br />
+        <hr />
+        [% INSERT footer.shtml %]
+        </div>
+    </body>
+</html>

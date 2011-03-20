@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>パーソンファインダー名簿画像未入力写真検索 - [% title %]</title>
+        <link rel="stylesheet" href="css/main.css" type="text/css" media="screen,tv">
+    </head>
+    <body>
+        <div id="contents">
+        <!--#include file="templates/head.shtml"-->
+        <h2>PF開始またはPF完了が含まれない写真</h2>
+        <p>参照アルバム：<a href="[% link %]" target="_blank">[% title %]</a> | <a href="index.cgi">ほかのアルバム一覧</a><br /><pre>最終確認日時:[% now %](リアルタイム更新ではないので、写真を開いたときにPFコメントが存在している場合もあります。)</pre></p>
+        <table class="main">
+        <tr><th>サムネイル</th><th>写真ページ</th><th>PFの有無</th><th class="comment">最後のコメント</th></tr>
+        [%FOREACH a = no_pf%]
+        <tr>
+            <td class="fld1"><a href="[% a.link %]" target="main"><img src="[% a.image %]" /></a></td>
+            <td class="fld2"><a href="[% a.link %]" target="main">[% a.title %]</a></td>
+[% IF a.pf_flag %]
+            <td class="fld3">あり</td>
+[% ELSE %]
+            <td class="fld3">なし</td>
+[% END %]
+            <td class="comment">[% a.pf_comment %]</td>
+        </tr>
+        [%END%]
+        </table>
+        <br />
+        <h2>PF開始またはPF完了が含まれている写真</h2>
+        <table class="main">
+        <tr><th>サムネイル</th><th>写真ページ</th><th>PFの有無</th><th class="comment">PFを含む最後のコメント</th></tr>
+        [%FOREACH a = pf%]
+        <tr>
+            <td class="fld1"><a href="[% a.link %]" target="main"><img src="[% a.image %]" /></a></td>
+            <td class="fld2"><a href="[% a.link %]" target="main">[% a.title %]</a></td>
+[% IF a.pf_flag %]
+            <td class="fld3">あり</td>
+[% ELSE %]
+            <td class="fld3">なし</td>
+[% END %]
+            <td class="comment">[% a.pf_comment %]</td>
+        </tr>
+        [%END%]
+        </table>
+        <br />
+        <hr />
+        <!--#include file="templates/footer.shtml"-->
+        </div>
+    </body>
+</html>

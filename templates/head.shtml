@@ -1,0 +1,7 @@
+        <h1> <a href="index.cgi">パーソンファインダー名簿画像未入力写真検索</a> </h1>
+        <h2> このページについて </h2>
+        <p>Gooleボランティアのページにて呼びかけているパーソンファインダーに画像からデータを入力するとき、PF開始またはPF完了しているかどうかを探すためのページです<br />詳細:東日本巨大地震 - ボランティア - <a href="http://www.google.co.jp/intl/ja/crisisresponse/japanquake2011_volunteer.html" target="_blank">http://www.google.co.jp/intl/ja/crisisresponse/japanquake2011_volunteeri2.html</a> </p>
+        <p>詳細:<a href="http://googlejapan.blogspot.com/2011/03/blog-post_17.html" target="_blank">Google Japan Blog: 共有された被災者名簿のパーソンファインダー登録についてご協力のお願い(2011 年 3 月 17 日)</a></p>
+        <p>掲載されている写真について、"PF"と"登録","開始","完了"という文字が含まれないページの一覧になります。入力作業の前に「PF 開始」、完了後に「PF 完了」というコメントを残すルールですが、"PF開始"または"PF完了"以外のコメント以外のバリエーションもあるので、正規表現（"/[PＰ][ＦF].*(完了|開始|登録|終了)/"）で比較的ゆるく絞り込んでいます 。すでに完了しているページがリストされることもあります。また、名簿ではない、案内表示や連絡も含まれています。</p>
+        
+        <hr />
