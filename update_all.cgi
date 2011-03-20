@@ -23,6 +23,7 @@ for my $roop (1 .. 100){
     my @list = $feed->get_item();
 
     my @ids = split(/,/,$id);
+    my $loop = 0;
     for (@list){
         #print "$_\n";
         #&create_page($_);
@@ -33,6 +34,8 @@ for my $roop (1 .. 100){
 
             &create_page($id);
         }
+        $loop++;
+        last if ($loop > 10);
     }
 
     sleep(10);
