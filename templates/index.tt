@@ -15,8 +15,10 @@
             <th></th>
             <th>アルバム名(一覧へのリンク)</th>
             <th>確認日時</th>
+            <th>PFなし</th>
+            <th>PFあり</th>
             <th>コメント</th>
-            <th>アルバムにある写真の数</th>
+            <th>写真の数</th>
             <th>日付</th>
         </tr>
         [%FOREACH a = items%]
@@ -28,7 +30,9 @@
             <td>[% a.title %](作成中)</td>
             [% END %]
             <td class="datetime">[% a.check_dt %]</td>
-            <td>[% a.description %]</td>
+            <td class="datetime">[% a.data.no_pf %]</td>
+            <td class="datetime">[% a.data.pf %]</td>
+            <td><div class="comment">[% a.description %]</div></td>
             <td class="num">[% a.numphotos %]</td>
             <td class="datetime">[% a.last_modified %]</td>
         </tr>

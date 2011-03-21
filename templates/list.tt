@@ -9,9 +9,16 @@
         <div id="contents">
         <!--#include file="templates/head.shtml"-->
         <h2>PF開始またはPF完了が含まれない写真</h2>
-        <p>参照アルバム：<a href="[% link %]" target="_blank">[% title %]</a> | <a href="index.cgi">ほかのアルバム一覧</a><br /><pre>最終確認日時:[% now %](リアルタイム更新ではないので、写真を開いたときにPFコメントが存在している場合もあります。)</pre></p>
+        <p>参照アルバム：<a href="[% link %]" target="_blank">[% title %]</a> | <a href="index.cgi">ほかのアルバム一覧</a></p><pre>最終確認日時:[% now %](リアルタイム更新ではないので、写真を開いたときにPFコメントが存在している場合もあります。)</pre>
         <table class="main">
-        <tr><th>サムネイル</th><th>写真ページ</th><th>PFの有無</th><th class="comment">最後のコメント</th></tr>
+        <tr>
+        <th>サムネイル</th>
+        <th>写真ページ</th>
+        <th>PFの有無</th>
+        <th class="comment">最後のコメント</th>
+        <th>日付</th>
+        <th>コメント数</th>
+        </tr>
         [%FOREACH a = no_pf%]
         <tr>
             <td class="fld1"><a href="[% a.link %]" target="main"><img src="[% a.image %]" /></a></td>
@@ -21,14 +28,23 @@
 [% ELSE %]
             <td class="fld3">なし</td>
 [% END %]
-            <td class="comment">[% a.pf_comment %]</td>
+            <td class="comment"><div class="comment">[% a.pf_comment %]</div></td>
+            <td class="fld3">[% a.pubDate %]</td>
+            <td class="fld3">[% a.count %]</td>
         </tr>
         [%END%]
         </table>
         <br />
         <h2>PF開始またはPF完了が含まれている写真</h2>
         <table class="main">
-        <tr><th>サムネイル</th><th>写真ページ</th><th>PFの有無</th><th class="comment">PFを含む最後のコメント</th></tr>
+        <tr>
+        <th>サムネイル</th>
+        <th>写真ページ</th>
+        <th>PFの有無</th>
+        <th class="comment">PFを含む最後のコメント</th>
+        <th>日付</th>
+        <th>コメント数</th>
+        </tr>
         [%FOREACH a = pf%]
         <tr>
             <td class="fld1"><a href="[% a.link %]" target="main"><img src="[% a.image %]" /></a></td>
@@ -38,7 +54,9 @@
 [% ELSE %]
             <td class="fld3">なし</td>
 [% END %]
-            <td class="comment">[% a.pf_comment %]</td>
+            <td class="comment"><div class="comment">[% a.pf_comment %]</div></td>
+            <td class="fld3">[% a.pubDate %]</td>
+            <td class="fld3">[% a.count %]</td>
         </tr>
         [%END%]
         </table>

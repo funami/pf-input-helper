@@ -7,6 +7,7 @@ use LWP::Simple;
 use Template;
 use CGI;
 use DateTime;
+use JSON::Syck;
 use utf8;
 my $cgi = CGI->new();
 
@@ -52,7 +53,10 @@ for (@$items){
         my $dt = DateTime->from_epoch(epoch=>$_->{'gphoto:timestamp'}/1000);
         $dt->set_time_zone( 'Asia/Tokyo' );
         $last_modified = $dt->strftime('%m/%d');
-
+        my $data = {};
+        my $data_file = "$FindBin::RealBin/".$_->{title}.".dat";
+        #print $data_file . "\n";
+        $data = eval{JSON::Syck::LoadFile($data_file)} if (-f $data_file); 
         push @list,{
             title => $_->{title},
             ththumbnail => $_->{'media:group'}{'media:thumbnail'}{'-url'},
@@ -61,6 +65,7 @@ for (@$items){
             last_modified => $last_modified,
             list_made => (-f "$FindBin::RealBin/".$_->{title}.".shtml") ? 1:0,
             check_dt => $file_list->{$_->{title}.".shtml"}{lm},
+            data => $data,
         }; 
     }
 }

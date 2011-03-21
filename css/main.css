@@ -41,35 +41,38 @@ h2 {
     margin: 15px 0 5px 0;
 }
 table.main{
-    border-top:1px solid #663300;
-    border-left:1px solid #663300;
+    border-top:1px solid #AAAAAA;
+    border-left:1px solid #AAAAAA;
     border-collapse:collapse;
     border-spacing:0;
     background-color:#ffffff;
     empty-cells:show;
     font-size: 10pt;
+    width: 100%;
 }
 .main th{
-    border-right:1px solid #663300;
-    border-bottom:1px solid #663300;
-    color:#330000;
-    background-color:#BB9966;
-    background-image:url(img/table-back.gif);
+    border-right:1px solid #AAAAAA;
+    border-bottom:1px solid #AAAAAA;
+    color:#FFFFFF;
+    background-color:#3333AA;
     background-position:left top;
     padding:0.1em 0.5em;
     text-align:center;
 }
 .main td{
-    border-right:1px solid #663300;
-    border-bottom:1px solid #663300;
+    border-right:1px solid #AAAAAA;
+    border-bottom:1px solid #AAAAAA;
     padding:0.1em 0.5em;
 }
 
-.comment{
-    width:50%;
+.main td .comment{
+    width:300px;
 }
 .fld1{ text-align:center; }
-.fld2{ text-align:left; }
+.fld2{ 
+    text-align:left; 
+    width:150px;
+}
 .fld3{ 
     text-align:center; 
     white-space: nowrap;

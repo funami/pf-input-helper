@@ -8,10 +8,13 @@ use Template;
 use CGI;
 use FindBin;
 use DateTime;
+use DateTime::Format::HTTP;
 use Encode;
 use Data::Dumper;
+use JSON::Syck;
 
 
+my $DEBUG = shift;
 my $cgi = CGI->new();
 my $id = $cgi->param('id') || '5584621473184252017,5584654012091048097,5584061561972296753,5584167979985669457,5584268762865923713,5583781275770007857,5583884024494116753,5583944651672966417';
 #$id = '5584654012091048097';
@@ -44,7 +47,7 @@ for my $roop (1 .. 100){
 
 sub create_page {
     my $id = shift;
-    my $url = "http://picasaweb.google.com/data/feed/base/user/tohoku.anpi/albumid/$id?alt=rss&kind=photo&hl=ja";
+    my $url = "http://picasaweb.google.com/data/feed/api/user/tohoku.anpi/albumid/$id?alt=rss&kind=photo&hl=ja";
 
     my $contents = get($url);
     my $scrubber = HTML::Scrubber->new();
@@ -54,13 +57,14 @@ sub create_page {
     my @list = $feed->get_item();
     my @out = (); 
     my @pf = ();
+    @list = @list[0 .. 5] if $DEBUG;
     for my $item (@list){
             #print $item->link() . "\n";
             #print $item->title() ."\n";
             my $photo_url = $item->guid()."&kind=comment";        
             $photo_url =~ s/entry/feed/;
             $photo_url =~ s/https/http/;
-            #print $photo_url . "\n";
+            print $photo_url . "\n" if $DEBUG;
             my $tpp = XML::TreePP->new(force_array =>['item']);
             my $tree = $tpp->parsehttp( GET => $photo_url );
             #print Dumper $tree->{rss}{channel}{item};
@@ -69,20 +73,24 @@ sub create_page {
                     pf_flag => 0,
                     pf_comment => '-',
                     photo_url => $item->guid(),
-                    title => Encode::encode_utf8($item->title()),
+                    title => Encode::encode_utf8($item->description()),
                     link => $item->link(),
                     image => $thu,  
+                    count => $tree->{rss}{channel}{'gphoto:commentCount'},
             };  
             for (@{$tree->{rss}{channel}{item}}){
                     my $cmt = $scrubber->scrub($_->{description});
                     my $cm = Encode::encode_utf8($cmt);
-                    if ($cmt =~ /[PＰ][ＦF].*(完了|開始|登録|終了)/){
+                    if ($cmt =~ /[PＰ][ＦF].*(完.*?了|開始|登録|終了)/){
                             $out_item->{pf_flag} = 1;
                             $out_item->{pf_comment} = $cmt;
                     }   
                     if (!$out_item->{pf_flag}){
                         $out_item->{pf_comment} = $cmt;
                     }
+                    my $dt = DateTime::Format::HTTP->parse_datetime($_->{pubDate});
+                    $dt->set_time_zone('Asia/Tokyo');
+                    $out_item->{pubDate} = $dt->strftime('%Y/%m/%d %H:%M');
             }   
             if ($out_item->{pf_flag}){
                 push @out,$out_item;
@@ -101,4 +109,8 @@ sub create_page {
     $tt->process('list.tt',$vars,"$FindBin::RealBin/$title.shtml")
                    || die $tt->error(), "\n";
 
+                   #open my $fh ,"<$FindBin::RealBin/$title.dat";
+    JSON::Syck::DumpFile("$FindBin::RealBin/$title.json",$vars); 
+    JSON::Syck::DumpFile("$FindBin::RealBin/$title.dat",{no_pf=>scalar(@pf),pf=>scalar(@out)}); 
+    #close $fh;
 }
